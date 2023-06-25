@@ -1,0 +1,64 @@
+﻿@model IEnumerable<QuanLyCuaHang.Models.BAIVIET>
+
+@{
+    ViewBag.Title = "Bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-bottom:10px;">
+    <div class="col-sm-12 text-end">
+        <a class="btn btn-primary" href="@Url.Action("Create","BAIVIET")" role="button">
+            <i class="fas fa-plus"></i>
+            <span>
+                <strong>Thêm bài viết mới</strong>
+            </span>
+        </a>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Tên bài viết
+                </th>
+                <th>
+                    Hình ảnh bài viết
+                </th>
+                <th>
+                    Danh mục bài viết
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenBV)
+                </td>
+                <th>
+                    <img class="card-img-bottom" src="~/@item.HinhAnhBV" alt="" style="height:100px;width:100px" />
+                </th>              
+                <th>
+                    @foreach(var i in ViewBag.DMBAIVIETs)
+                    {
+                        if (i.MaDMBV == item.MaDMBV)
+                        {
+                            @i.TenDMBV
+                        }
+                    }                  
+                </th>
+                <td>
+                    <a class="btn-sm btn-primary" href="@Url.Action("Edit","BAIVIET",new { id = item.MaBV })" role="button">
+                        <i class="fas fa-edit"></i>
+                    </a>   |
+                    <a class="btn-sm btn-warning" href="@Url.Action("Delete","BAIVIET",new { id = item.MaBV })" role="button">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

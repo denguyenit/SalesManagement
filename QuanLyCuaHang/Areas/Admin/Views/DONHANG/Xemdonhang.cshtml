@@ -1,0 +1,136 @@
+﻿@model QuanLyCuaHang.Models.CHITIETDONHANG
+
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+
+}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Ngày đặt
+                </th>
+                <th>
+                    Mã khách hàng
+                </th>
+                <th>
+                    Tên người đặt
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Số điện thoại
+                </th>
+                <th>
+                    Địa chỉ
+                </th>
+                <th>
+                    Tình trạng
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var item = (QuanLyCuaHang.Models.DONHANG)ViewBag.DONHANGs;
+            }
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayDat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaKH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenNguoiDat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SDT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Mã sản phẩm
+                </th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng đặt</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in ViewBag.Chitiet as IList<QuanLyCuaHang.Models.CHITIETDONHANG>)
+            {
+                foreach (var t in ViewBag.Dssanpham)
+                {
+                    if (i.MaSP == t.MaSP)
+                    {
+                        <tr>
+                            <td>
+                                @i.MaSP
+                            </td>
+                            <td>
+                                @t.TenSP
+                            </td>
+                            <td>
+                                @i.SoluongDat
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div style="margin-top:20px">
+    <form action="@Url.Action("Xuatthongtingiaohang","DONHANG")" method="post" style="margin-top:5px">
+        <input type="text" value="@item.MaDH" id="madh" name="madh" hidden>
+        <input class="btn btn-outline-danger" type="submit" value="Xuất thông tin giao hàng" />
+    </form>
+    <form action="@Url.Action("Xuatchitietdon","DONHANG")" method="post">
+        <input type="text" value="@item.MaDH" id="madh" name="madh" hidden>
+        <input class="btn btn-outline-danger" type="submit" value="Xuất thông tin đơn hàng" />
+    </form>
+</div>   
+    <div style="margin-top:20px">
+        <a class="btn btn-success" href="@Url.Action("Xacnhandon","DONHANG",new { madh = item.MaDH} )" role="button">
+            <span>
+                <i class="fas fa-plus"></i>
+            </span> Xác nhận đơn hàng
+        </a> |
+        <a class="btn btn-warning" href="@Url.Action("Huydon","DONHANG",new { madh = item.MaDH} )" role="button">
+            <span>
+                <i class="fas fa-trash-alt"></i>
+            </span> Hủy đơn hàng
+        </a> |
+        <a class="btn btn-primary" href="@Url.Action("Index","DONHANG")" role="button">
+            <span>
+                <i class="fas fa-list"></i>
+            </span> Quay lại danh sách đơn hàng
+        </a>
+    </div>
+
+
+
+

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<QuanLyCuaHang.Models.DMSANPHAM>
+
+@{
+    ViewBag.Title = "Danh mục sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-bottom:10px;">
+    <div class="col-sm-12 text-end">
+        <a class="btn btn-primary" href="@Url.Action("Create","DMSANPHAM")" role="button">
+            <i class="fas fa-plus"></i>
+            <span>
+                <strong>Thêm danh mục sản phẩm mới</strong>
+            </span>
+        </a>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Tên danh mục sản phẩm
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenDMSP)
+                    </td>
+                    <td>
+                        <a class="btn-sm btn-primary" href="@Url.Action("Edit","DMSANPHAM",new { id = item.MaDMSP })" role="button">
+                            <i class="fas fa-edit"></i>
+                        </a>   |
+                        <a class="btn-sm btn-warning" href="@Url.Action("Delete","DMSANPHAM",new { id = item.MaDMSP })" role="button">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

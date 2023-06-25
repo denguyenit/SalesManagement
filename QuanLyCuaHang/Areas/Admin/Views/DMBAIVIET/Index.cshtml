@@ -1,0 +1,48 @@
+﻿@model IEnumerable<QuanLyCuaHang.Models.DMBAIVIET>
+
+@{
+    ViewBag.Title = "Danh mục bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-bottom:10px;">
+    <div class="col-sm-12 text-end" >
+        <a class="btn btn-primary" href="@Url.Action("Create","DMBAIVIET")" role="button">
+            <i class="fas fa-plus"></i>
+            <span>
+                <strong>Thêm danh mục mới</strong>
+            </span>
+        </a>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead >
+            <tr>
+                <th>
+                    Tên danh mục bài viết
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenDMBV)
+                    </td>
+                    <td>
+                        <a class="btn-sm btn-primary" href="@Url.Action("Edit","DMBAIVIET",new { id = item.MaDMBV })" role="button">
+                            <i class="fas fa-edit"></i>
+                        </a>   |
+                        <a class="btn-sm btn-warning" href="@Url.Action("Delete","DMBAIVIET",new { id = item.MaDMBV })" role="button">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>                 
+                    </td>
+                </tr>
+            }
+        </tbody>        
+    </table>
+</div>
+

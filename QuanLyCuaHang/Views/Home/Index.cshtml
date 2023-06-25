@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+}
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin-top:10px">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/Image/qc1.png" class="d-block w-100" alt="">
+        </div>
+        <div class="carousel-item">
+            <img src="~/Image/qc2.png" class="d-block w-100" alt="">
+        </div>
+        <div class="carousel-item">
+            <img src="~/Image/qc3.png" class="d-block w-100" alt="">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<div class="row" style="margin-top:10px">
+    <h3>✶SẢN PHẨM NỔI BẬT✶</h3>
+</div>
+<section class="py-0">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var t in ViewBag.Noibat)
+            {
+                    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                    <div class="col mb-5">
+                        <div class="card h-100" style="border-radius:20px 20px 20px 20px">
+                            <!-- Product image-->
+                            <a href="@Url.Action("Chitietsanpham", "Sanpham", new { id=t.MaSP })">
+                                <img class="card-img-top" src="~/@t.HinhAnhSP" alt="" style="margin-top:10px" />
+                            </a>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <a class="btn btn-light" href="@Url.Action("Chitietsanpham", "Sanpham", new { id=t.MaSP })"><h5 class="fw-bolder">@t.TenSP</h5></a>
+                                    <!-- Product price-->
+                                    <p><b style="color:red">Giá: @String.Format(format, "{0:c0}", t.GiaSP)</b></p>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-danger mt-auto" href="@Url.Action("Giohang","Giohang",new { id=t.MaSP,soluonggh=1})">Thêm giỏ hàng</a></div>
+                            </div>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</section>
+@foreach (var item1 in ViewBag.DMSANPHAMs)
+{
+    <div class="row" style="margin-top:10px">
+        <h3>@item1.TenDMSP</h3>
+    </div>
+    <section class="py-0">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @foreach (var t in ViewBag.SANPHAMs)
+                {
+                    if (t.MaDMSP == item1.MaDMSP)
+                    {
+                        var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                        <div class="col mb-5">
+                            <div class="card h-100" style="border-radius:20px 20px 20px 20px">
+                                <!-- Product image-->
+                                <a href="@Url.Action("Chitietsanpham", "Sanpham", new { id=t.MaSP })">
+                                    <img class="card-img-top" src="~/@t.HinhAnhSP" alt="" style="margin-top:10px" />
+                                </a>
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <a class="btn btn-light" href="@Url.Action("Chitietsanpham", "Sanpham", new { id=t.MaSP })"><h5 class="fw-bolder">@t.TenSP</h5></a>
+                                        <!-- Product price-->
+                                        <p><b style="color:red">Giá: @String.Format(format, "{0:c0}", t.GiaSP)</b></p>
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><a class="btn btn-outline-danger mt-auto" href="@Url.Action("Giohang","Giohang",new { id=t.MaSP,soluonggh=1})">Thêm giỏ hàng</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+}

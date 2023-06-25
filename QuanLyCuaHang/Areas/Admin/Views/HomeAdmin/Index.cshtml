@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Tổng quan";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h4 style="color:black"><i class="fas fa-chart-line"></i><ins>Hoạt động hôm nay</ins></h4>
+<div class="row"style="margin-top:10px;">
+    <div class="col">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header"><i class="fas fa-dollar-sign"></i>Doanh số bán ra</div>
+            <div class="card-body">
+                @{ var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                    var doanhso = ViewBag.Doanhso;}
+                <p class="card-text">@String.Format(format, "{0:c0}", doanhso)</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header"><i class="fas fa-cart-plus"></i>Số đơn hàng</div>
+            <div class="card-body">
+                <p class="card-text">@ViewBag.Dhhomnay</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-header"><i class="far fa-plus-square"></i>Tồn kho</div>
+            <div class="card-body">
+                <p class="card-text">@ViewBag.Tonkho</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header"><i class="fas fa-cart-arrow-down"></i>Số đơn hàng hủy</div>
+            <div class="card-body">
+                <p class="card-text">@ViewBag.Dhhuy</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top:10px;">
+    <div class="col">
+        <div class="card border-success mb-3">
+            <div class="card-header">Tổng số sản phẩm</div>
+            <div class="card-body">
+                <p class="card-text">@ViewBag.CountSP</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card border-success mb-3">
+            <div class="card-header">Tổng số khách hàng</div>
+            <div class="card-body">
+                <p class="card-text">@ViewBag.CountKH</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card border-success mb-3">
+            <div class="card-header">Tổng số bài viết</div>
+            <div class="card-body">
+                <p class="card-text">@ViewBag.CountBV</p>
+            </div>
+        </div>
+    </div>
+</div>
+<H3>Thống kê danh sách tồn kho</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>Hình ảnh</th>
+                <th>Số lượng tồn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Dssanpham)
+            {
+               
+                <tr>
+                    <td>
+                       @item.TenSP
+                    </td>
+                    <td>   
+                        <img class="card-img-bottom" src="~/@item.HinhAnhSP" alt="" style="height:100px;width:100px" />
+                    </td>
+                    <td>
+                        @item.SoLuongTon
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+

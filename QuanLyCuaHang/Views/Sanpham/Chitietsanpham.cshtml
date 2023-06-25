@@ -1,0 +1,70 @@
+﻿@model QuanLyCuaHang.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Chitietsanpham";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@foreach (var dm in ViewBag.Danhmucs)
+{
+    var sp = ViewBag.Sanpham;
+    if (dm.MaDMSP == sp.MaDMSP)
+    {
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("Danhmucsanpham", "Sanpham", new { id=dm.MaDMSP })">@dm.TenDMSP</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sp.TenSP</li>
+            </ol>
+        </nav>
+    }
+}
+@{
+    var sp1 = ViewBag.Sanpham;
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    <h3 style="margin-top:10px">@sp1.TenSP</h3>
+    <div class="row">
+        <div class="col">
+            <img class="card-img-top" src="~/@sp1.HinhAnhSP" alt="" />
+        </div>
+        <div class="col">
+            <p style="font-size:small;margin:unset"><i>Mã hàng: CRW-W06 / Thương hiệu </i></p>
+            <p><b>Đánh giá: </b><span style="color:red">✩✩✩✩✩</span></p>
+            <p><b>Xuất xứ: </b><span style="color:red">TRUNG QUỐC</span></p>
+            @if (!string.IsNullOrWhiteSpace(sp1.MieuTa))
+            {
+                <h5><b>Thông số kĩ thuật:</b></h5>
+                var lines = sp1.MieuTa.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in lines)
+                {
+                    <p style="font-size:medium;margin:unset">@line</p>
+                }
+            }
+
+            <p><b>Số lượng có sẵn: @sp1.SoLuongTon </b></p>
+            <p><b>Số lượng mua:</b></p>
+            <form action="@Url.Action("Giohang","Giohang")" method="get">
+                <input type="number" name="id" id="id" value="@sp1.MaSP" hidden="hidden">
+                <input type="number" id="soluonggh" name="soluonggh" min="1" max="@sp1.SoLuongTon" value="1">
+                <p><b>Giá bán: </b><span style="color:red">@String.Format(format, "{0:c0}", sp1.GiaSP)</span></p>
+                <button class="btn btn-danger mt-auto" type="submit">Thêm giỏ hàng</button>
+            </form>
+        </div>
+        <div class="col" style="margin-left:150px">
+            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                <div class="card-header"><i class="fas fa-bars"></i> DỊCH VỤ & CHÚ Ý </div>
+                <div class="card-body">
+                    <p class="card-text">Quý khách vui lòng liên hệ với nhân viên bán hàng theo số điện thoại Hotline sau: <b style="color:red">0346 191 229</b> để biết thêm chi tiết về sản phẩm.</p>
+                </div>
+            </div>
+            <div class="card border-danger mb-3" style="max-width: 18rem;">
+                <div class="card-body text-danger">
+                    <p class="card-text">Bạn sẽ được giao hàng miễn phí trong khu vực nội thành Thành phố Quy Nhơn khi mua sản phẩm này.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h1> </h1>
+        <h1> </h1>
+    </div>
+}

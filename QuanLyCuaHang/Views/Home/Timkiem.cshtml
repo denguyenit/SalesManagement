@@ -1,0 +1,47 @@
+﻿@model QuanLyCuaHang.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+    </ol>
+</nav>
+<div class="row" style="margin-top:10px">
+    <h3>SẢN PHẨM TÌM ĐƯỢC</h3>
+</div>
+<section class="py-0">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var t in ViewBag.Timkiem)
+            {
+                var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                <div class="col mb-5">
+                    <div class="card h-100" style="border-radius:20px 20px 20px 20px">
+                        <!-- Product image-->
+                        <a href="@Url.Action("Chitietsanpham", "Sanpham", new { id=t.MaSP })">
+                            <img class="card-img-top" src="~/@t.HinhAnhSP" alt="" style="margin-top:10px" />
+                        </a>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <a class="btn btn-light" href="@Url.Action("Chitietsanpham", "Sanpham", new { id=t.MaSP })"><h5 class="fw-bolder">@t.TenSP</h5></a>
+                                <!-- Product price-->
+                                <p><b style="color:red">Giá: @String.Format(format, "{0:c0}", t.GiaSP)</b></p>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-danger mt-auto" href="@Url.Action("Giohang","Giohang",new { id=t.MaSP,soluonggh=1})">Thêm giỏ hàng</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

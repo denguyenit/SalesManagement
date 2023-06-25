@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="qlbanhangModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BAIVIET">
+    <Key>
+      <PropertyRef Name="MaBV" />
+    </Key>
+    <Property Name="MaBV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenBV" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MaDMBV" Type="Int32" />
+    <Property Name="HinhAnhBV" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ChiTietBV" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DMBAIVIET" Relationship="Self.FK__BAIVIET__MaDMBV__1273C1CD" FromRole="BAIVIET" ToRole="DMBAIVIET" />
+  </EntityType>
+  <EntityType Name="CHITIETDONHANG">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaDH" Type="Int32" />
+    <Property Name="MaSP" Type="Int32" />
+    <Property Name="SoluongDat" Type="Int32" />
+    <NavigationProperty Name="DONHANG" Relationship="Self.FK__CHITIETDON__MaDH__1DE57479" FromRole="CHITIETDONHANG" ToRole="DONHANG" />
+    <NavigationProperty Name="SANPHAM" Relationship="Self.FK__CHITIETDON__MaSP__1ED998B2" FromRole="CHITIETDONHANG" ToRole="SANPHAM" />
+  </EntityType>
+  <EntityType Name="DMBAIVIET">
+    <Key>
+      <PropertyRef Name="MaDMBV" />
+    </Key>
+    <Property Name="MaDMBV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDMBV" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BAIVIETs" Relationship="Self.FK__BAIVIET__MaDMBV__1273C1CD" FromRole="DMBAIVIET" ToRole="BAIVIET" />
+  </EntityType>
+  <EntityType Name="DMSANPHAM">
+    <Key>
+      <PropertyRef Name="MaDMSP" />
+    </Key>
+    <Property Name="MaDMSP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDMSP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SANPHAMs" Relationship="Self.FK__SANPHAM__MaDMSP__173876EA" FromRole="DMSANPHAM" ToRole="SANPHAM" />
+  </EntityType>
+  <EntityType Name="DONHANG">
+    <Key>
+      <PropertyRef Name="MaDH" />
+    </Key>
+    <Property Name="MaDH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NgayDat" Type="DateTime" Precision="3" />
+    <Property Name="MaKH" Type="Int32" />
+    <Property Name="TenNguoiDat" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="DiaChi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TinhTrang" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CHITIETDONHANGs" Relationship="Self.FK__CHITIETDON__MaDH__1DE57479" FromRole="DONHANG" ToRole="CHITIETDONHANG" />
+  </EntityType>
+  <EntityType Name="KHACHHANG">
+    <Key>
+      <PropertyRef Name="MaKH" />
+    </Key>
+    <Property Name="MaKH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenKH" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="QUANTRI">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SANPHAM">
+    <Key>
+      <PropertyRef Name="MaSP" />
+    </Key>
+    <Property Name="MaSP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenSP" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="GiaSP" Type="Double" />
+    <Property Name="MieuTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="HinhAnhSP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SoLuongTon" Type="Int32" />
+    <Property Name="MaDMSP" Type="Int32" />
+    <NavigationProperty Name="CHITIETDONHANGs" Relationship="Self.FK__CHITIETDON__MaSP__1ED998B2" FromRole="SANPHAM" ToRole="CHITIETDONHANG" />
+    <NavigationProperty Name="DMSANPHAM" Relationship="Self.FK__SANPHAM__MaDMSP__173876EA" FromRole="SANPHAM" ToRole="DMSANPHAM" />
+    <Property Name="Sanphamnoibat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__BAIVIET__MaDMBV__1273C1CD">
+    <End Role="DMBAIVIET" Type="Self.DMBAIVIET" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BAIVIET" Type="Self.BAIVIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMBAIVIET">
+        <PropertyRef Name="MaDMBV" />
+      </Principal>
+      <Dependent Role="BAIVIET">
+        <PropertyRef Name="MaDMBV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CHITIETDON__MaDH__1DE57479">
+    <End Role="DONHANG" Type="Self.DONHANG" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CHITIETDONHANG" Type="Self.CHITIETDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DONHANG">
+        <PropertyRef Name="MaDH" />
+      </Principal>
+      <Dependent Role="CHITIETDONHANG">
+        <PropertyRef Name="MaDH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CHITIETDON__MaSP__1ED998B2">
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CHITIETDONHANG" Type="Self.CHITIETDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SANPHAM">
+        <PropertyRef Name="MaSP" />
+      </Principal>
+      <Dependent Role="CHITIETDONHANG">
+        <PropertyRef Name="MaSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SANPHAM__MaDMSP__173876EA">
+    <End Role="DMSANPHAM" Type="Self.DMSANPHAM" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMSANPHAM">
+        <PropertyRef Name="MaDMSP" />
+      </Principal>
+      <Dependent Role="SANPHAM">
+        <PropertyRef Name="MaDMSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="qlbanhangEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BAIVIETs" EntityType="Self.BAIVIET" />
+    <EntitySet Name="CHITIETDONHANGs" EntityType="Self.CHITIETDONHANG" />
+    <EntitySet Name="DMBAIVIETs" EntityType="Self.DMBAIVIET" />
+    <EntitySet Name="DMSANPHAMs" EntityType="Self.DMSANPHAM" />
+    <EntitySet Name="DONHANGs" EntityType="Self.DONHANG" />
+    <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
+    <EntitySet Name="QUANTRIs" EntityType="Self.QUANTRI" />
+    <EntitySet Name="SANPHAMs" EntityType="Self.SANPHAM" />
+    <AssociationSet Name="FK__BAIVIET__MaDMBV__1273C1CD" Association="Self.FK__BAIVIET__MaDMBV__1273C1CD">
+      <End Role="DMBAIVIET" EntitySet="DMBAIVIETs" />
+      <End Role="BAIVIET" EntitySet="BAIVIETs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CHITIETDON__MaDH__1DE57479" Association="Self.FK__CHITIETDON__MaDH__1DE57479">
+      <End Role="DONHANG" EntitySet="DONHANGs" />
+      <End Role="CHITIETDONHANG" EntitySet="CHITIETDONHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CHITIETDON__MaSP__1ED998B2" Association="Self.FK__CHITIETDON__MaSP__1ED998B2">
+      <End Role="SANPHAM" EntitySet="SANPHAMs" />
+      <End Role="CHITIETDONHANG" EntitySet="CHITIETDONHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SANPHAM__MaDMSP__173876EA" Association="Self.FK__SANPHAM__MaDMSP__173876EA">
+      <End Role="DMSANPHAM" EntitySet="DMSANPHAMs" />
+      <End Role="SANPHAM" EntitySet="SANPHAMs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

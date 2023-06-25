@@ -1,0 +1,156 @@
+﻿@model QuanLyCuaHang.Models.Giohang
+
+@{
+    ViewBag.Title = "Giỏ hàng của bạn";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<script src="~/Scripts/GiohangController/Giohang.js"></script>
+<div style="margin-top:10px;" class="container bg-light">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+        </ol>
+    </nav>
+    <h3 style="margin-top:10px">GIỎ HÀNG CỦA BẠN</h3>
+    @if (Session["GHSession"] != null)
+    {
+        <table class="table table-warning">
+            <thead>
+                <tr>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Thành tiền</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var tongtien = 0;
+                }
+                @foreach (var sp in ViewBag.Giohang)
+                {
+                    foreach (var i in ViewBag.Sanphams)
+                    {
+                        var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                        if (i.MaSP == sp.MaSP)
+                        {
+                            var thanhtien = i.GiaSP * sp.SoluongDat;
+                            tongtien += thanhtien;
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Chitietsanpham", "Sanpham", new { id=i.MaSP })">
+                                        <img class="card-img-bottom" src="~/@i.HinhAnhSP" alt="" style="height:100px;width:100px" />
+                                    </a>
+                                </td>
+                                <td>@i.TenSP</td>
+                                <td>@String.Format(format, "{0:c0}", i.GiaSP)</td>
+                                <td><input type="number" id="soluongsp" name="soluongsp" min="1" max="@i.SoLuongTon" form="form @i.MaSP" value="@sp.SoluongDat"></td>
+                                <td>@String.Format(format, "{0:c0}", thanhtien)</td>
+                                <td>
+                                    <form action="@Url.Action("Capnhat","Giohang")" method="get" id="form @i.MaSP">
+                                        <input type="number" name="id" id="id" value="@i.MaSP" hidden="hidden">
+                                        <button id="btnCapNhat" class="btn btn-success" type="submit">Cập nhật</button>
+                                    </form><a href="@Url.Action("Xoa","Giohang",new { id= i.MaSP})" class="btn btn-warning" style="margin-top:4px">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                }
+            </tbody>
+        </table>
+
+        <div class="row">
+            <p style="text-align:end">
+                @{var format1 = System.Globalization.CultureInfo.GetCultureInfo("vi-VN"); }
+                Tổng tiền: @String.Format(format1, "{0:c0}", tongtien)
+            </p>
+        </div>
+        <div class="row text-end">
+            <p style="text-align:end">
+                Phí vận chuyển: @String.Format(format1, "{0:c0}", 30000)
+            </p>
+        </div>
+        <div class="row text-end">
+            <p style="text-align:end">
+                Tổng tiền khi thanh toán: @String.Format(format1, "{0:c0}", tongtien + 30000)
+            </p>
+        </div>
+        <div class="row text-end">
+            <p style="text-align:end;color:red">
+               Thanh toán khi nhận hàng
+            </p>
+        </div>
+    }
+    else
+    {
+        <p>Chưa có sản phẩm nào trong giỏ hàng</p>
+    }
+    <div style="margin-top:10px;">
+        <a href="@Url.Action("Index", "Home")">
+            Tiếp tục mua hàng
+        </a>
+
+        @if (Session["IdKH"] == null)
+        {
+            <div class="row">
+                <a class="btn btn-outline-danger" href="@Url.Action("Dangnhap", "KH")">
+                    Vui lòng đăng nhập để đặt hàng
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="row" style="text-align:center">
+                <p><b>NHẬP THÔNG TIN ĐỂ MUA HÀNG</b></p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>ĐỊA CHỈ CỦA CHÚNG TÔI</b></p>
+                    510 Hoàng Văn Thụ, Ngô Mây, TP Quy Nhơn, Bình Định
+                </div>
+                <div class="col">
+                    <form action="@Url.Action("Dathang","Giohang")" method="post" class="form-control">
+                        <div class="form-control-plaintext">
+                            <div class="col-form-label">
+                                <label class="col-md-5 text-primary">Họ và tên:</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="ten" id="ten" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-form-label">
+                                <label class="col-md-5 text-primary">Số điện thoại:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="sdt" id="sdt">
+                                </div>
+                            </div>
+                            <div class="col-form-label">
+                                <label class="col-md-5 text-primary">Địa chỉ</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="diachi" id="diachi" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-form-label">
+                                <label class="col-md-2 text-primary">Email:</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="email" id="email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Đặt hàng" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
